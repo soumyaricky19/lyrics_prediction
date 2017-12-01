@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+                <head>
+				<link rel="shortcut icon" href="">
+                <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+                <meta content="utf-8" http-equiv="encoding">
+                <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+                <script>
+                $(document).ready(function()
+                {
+                        $("#btn").click(function () {
+                                $("#result1").empty();
+                                var in_dt= $("#taid").val();
+                                $.ajax({
+                                        url: 'index.php',
+                                        type: 'post',
+                                        data: {in_data: in_dt},
+                                        async: false,
+                                        success:function(res){
+                                                // alert(res);
+                                                var data = JSON.parse(res);
+                                                var result='<h3>Prediction:-</h3><table><tr><th>MOOD</th><th>PROBABILITY</th></tr>';
+                                                for (i=0;i<data.length;i++) {
+                                                        key=data[i][0]
+                                                        value=data[i][1]
+                                                        result+='<tr><th>'+key+'</th><th>'+value+'</th></tr>';
+                                                }
+                                                result+='</table>'
+                                                $("#result1").html(result);
+                                        }
+                                });
+                        });
+                });
+                </script>
+                </head>
+                <h2>Enter lyrics
+                </h2>
+                <body id="here">
+					<textarea form ="formid" name="taname" id="taid" rows="20" cols="50" wrap="soft"></textarea>
+					<div>
+							<br/>
+							<input type="submit" name="submit" id="btn" value="Submit" />
+					</div>
+                <div id="result1">
+                </div>
+        </body>
+</html>
